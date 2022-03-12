@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import Nav from "../components/Nav";
 import { useCookies } from "react-cookie";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Onboarding() {
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const [formData, setFormData] = useState({
+    user_id: cookies.UserId,
     first_name: "",
     dob_day: "",
     dob_month: " ",
@@ -17,6 +20,8 @@ function Onboarding() {
     matches: [],
   });
 
+  let navigate = useNavigate();
+
   const handleChange = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -28,8 +33,17 @@ function Onboarding() {
       [name]: value,
     }));
   };
-  const handleSubmit = () => {
-    console.log("Submitted");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put("http://localhost:8000/user", {
+        formData,
+      });
+      const success = response.status === 200;
+      if (success) navigate("/dashboard");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   console.log(formData);
