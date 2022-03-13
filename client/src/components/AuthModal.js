@@ -12,7 +12,7 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
 
   let navigate = useNavigate();
 
-  console.log(email, password, confirmPassword);
+  // console.log(email, password, confirmPassword);
 
   const handleClick = () => {
     setShowModal(false);
@@ -55,8 +55,9 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
       </div>
       <h2>{isSignUp ? "CREATE ACCOUNT" : "LOG IN"}</h2>
       <p>
-        By clicking Log In, you agree to our Terms. Learn how we process your
-        data in our Privacy Policy and Cookie Policy.
+        By {isSignUp ? "creating an account" : "logging in"}, you agree to our
+        Terms. Learn how we process your data in our Privacy Policy and Cookie
+        Policy.
       </p>
       <form onSubmit={handleSubmit}>
         <input

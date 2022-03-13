@@ -1,8 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 
 function MatchesDisplay({ matches, setClickedUser }) {
   const [matchedProfiles, setMatchedProfiles] = useState(null);
+  const [cookies, setCookie, removeCookie] = useCookies(null);
+
+  const userId = cookies.UserId;
 
   const matchedUserIds = matches.map(({ user_id }) => user_id);
 
@@ -19,19 +23,26 @@ function MatchesDisplay({ matches, setClickedUser }) {
 
   useEffect(() => {
     getMatches();
-  }, []);
+  }, [matches]);
 
   // console.log(matchedProfiles);
 
+  //function to make sure that users can chat with each other, when both have equally right-swiped on each other!
+  const filteredMatchedProfiles = matchedProfiles?.filter(
+    (matchedProfile) =>
+      matchedProfile.matches.filter((profile) => profile.user_id == userId)
+        .length > 0
+  );
+
   return (
     <div className='matches-display'>
-      {matchedProfiles?.map((match, _index) => (
+      {filteredMatchedProfiles?.map((match) => (
         <div
-          key={{ _index }}
+          key={match.user_id}
           className='match-card'
           onClick={() => setClickedUser(match)}
         >
-          <div className='image-container'>
+          <div className='img-container'>
             <img src={match?.url} alt={match?.first_name + " profile"} />
           </div>
           <h3>{match?.first_name}</h3>

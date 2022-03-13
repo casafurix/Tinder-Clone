@@ -27,7 +27,7 @@ function ChatContainer({ user }) {
       )}
 
       {/* whereas, if there is a clicked user, display chat box */}
-      {clickedUser && <ChatDisplay />}
+      {clickedUser && <ChatDisplay user={user} clickedUser={clickedUser} />}
     </div>
   );
 }
