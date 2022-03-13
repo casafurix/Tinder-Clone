@@ -30,7 +30,7 @@ function MatchesDisplay({ matches, setClickedUser }) {
   //function to make sure that users can chat with each other, when both have equally right-swiped on each other!
   const filteredMatchedProfiles = matchedProfiles?.filter(
     (matchedProfile) =>
-      matchedProfile.matches.filter((profile) => profile.user_id == userId)
+      matchedProfile.matches.filter((profile) => profile.user_id === userId)
         .length > 0
   );
 
