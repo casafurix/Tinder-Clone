@@ -1,4 +1,3 @@
-const PORT = 8000;
 const express = require("express");
 const { MongoClient } = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
@@ -255,4 +254,6 @@ app.post("/message", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => console.log("Server running on PORT " + PORT));
+app.listen(process.env.PORT || 8000, () =>
+  console.log("Server running on PORT " + process.env.PORT)
+);
